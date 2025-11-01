@@ -65,8 +65,7 @@ void menu::render( )
 
 	static std::uint32_t selected_tab = 0;
 	ImGui::SetNextWindowSize( ImVec2{ 560.f, 412.f }, ImGuiCond_Once );
-	ImGui::Begin( _( "nigga.tw pacify" ), nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
-
+	ImGui::Begin( _( "vm.tw pacify" ), nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
 	ImGui::BeginChild( _( "tabs" ), ImVec2{ 150, 0 }, true );
 
 	static constexpr const char* tabs[ ]{
@@ -76,14 +75,6 @@ void menu::render( )
 		"items"
 	};
 
-	static constexpr const char* state_type[ ]{
-		"none",
-		"hooked",
-		"trapped",
-		"hiding",
-		"dead",
-		"caged"
-	};
 
 	for ( std::size_t i = 0; i < IM_ARRAYSIZE( tabs ); ++i )
 	{
@@ -94,9 +85,7 @@ void menu::render( )
 	}
 
 	ImGui::EndChild( );
-
 	ImGui::SameLine( );
-
 	ImGui::BeginGroup( );
 
 	switch ( selected_tab )
@@ -106,20 +95,7 @@ void menu::render( )
 		ImGui::Separator( );
 		ImGui::Spacing( );
 
-		ImGui::Checkbox( "name", &variables::players::name );
-		ImGui::Checkbox( "skeleton", &variables::players::skeleton );
-		ImGui::Checkbox( "snapline", &variables::players::snapline );
-
-		ImGui::Spacing( );
-		ImGui::Spacing( );
-
-		ImGui::Text( "survivor color" );
-		ImGui::SameLine( );
-		ImGui::ColorEdit4( ( "##survivor_color" ), variables::players::survivor_color, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar );
-
-		ImGui::Text( "killer color" );
-		ImGui::SameLine( );
-		ImGui::ColorEdit4( ( "##killer_color" ), variables::players::killer_color, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar );
+		// TODO
 
 		break;
 	case 1:
@@ -163,16 +139,15 @@ void menu::render( )
 		ImGui::Checkbox( "Ghost ignores you", &variables::misc::ignore_by_ai, false );
 		ImGui::Checkbox( "Freeze Ghost (BETA)", &variables::misc::freeze_ghost, false );
 		break;
-	case 3: // items
+	case 3: 
 	{
 		ImGui::Text( "items" );
 		ImGui::Separator( );
 		ImGui::Spacing( );
 
-		// refresh controls
 		if ( ImGui::Button( "refresh" ) )
 		{
-			ui_items::refresh( ( SDK::UWorld* )variables::globals::world ); // adjust to your world pointer
+			ui_items::refresh( ( SDK::UWorld* )variables::globals::world );
 		}
 		ImGui::SameLine( );
 		ImGui::SetNextItemWidth( 220.f );
@@ -180,10 +155,8 @@ void menu::render( )
 
 		ImGui::Spacing( );
 
-		// list + details
 		ImGui::BeginChild( "items_list", ImVec2( 260.f, 260.f ), true );
 		{
-			// build filtered index list first
 			static std::vector<int> filtered;
 			filtered.clear( );
 			filtered.reserve( ui_items::cache.size( ) );
@@ -206,7 +179,6 @@ void menu::render( )
 				}
 			}
 
-			// clear selection if it fell out of filter
 			if ( !ui_items::cache.empty( ) && ui_items::selected >= 0 )
 			{
 				bool still_visible = false;
