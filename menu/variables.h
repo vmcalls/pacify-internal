@@ -69,7 +69,7 @@ namespace ghost_filter
 {
 	struct see_pawn_params { SDK::APawn* pawn; };
 
-	// Overlap: void (UPrimitiveComponent* overlapped_comp, AActor* other_actor, UPrimitiveComponent* other_comp, int32 other_body_index, bool b_from_sweep, const FHitResult& sweep_result)
+	// void (UPrimitiveComponent* overlapped_comp, AActor* other_actor, UPrimitiveComponent* other_comp, int32 other_body_index, bool b_from_sweep, const FHitResult& sweep_result)
 	struct begin_overlap_params
 	{
 		SDK::UPrimitiveComponent* overlapped_comp;
@@ -103,10 +103,6 @@ namespace ghost_filter
 			return ( p && p->other_actor == reinterpret_cast< SDK::AActor* >( variables::globals::my_player ) );
 		}
 
-		// do NOT block generic OnSuccess_/OnFail_ here (keeps AI running normally)
-		// optionally: if a direct "Jumpscare" function exists, you can still block that
-		// but usually blocking SeePawn/Overlap for *you* is enough.
-
 		return false;
 	}
 }
@@ -138,4 +134,5 @@ namespace variables::misc
 	inline bool fullbright{ false };
 	inline bool ignore_by_ai{ false };
 	inline bool freeze_ghost{ false };
+
 }
