@@ -35,8 +35,9 @@ bool DllMain( const HMODULE module, const std::uint32_t call_reason, void* reser
 	}
 	else if ( call_reason == DLL_PROCESS_DETACH )
 	{
-		//hooks::release( );
+		hooks::release( );
 	}
 
 	return true;
+
 }
